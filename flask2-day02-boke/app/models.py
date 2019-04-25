@@ -6,7 +6,7 @@ from app.exts import db
 class User(db.Model):#用户表
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(256))
+    password = db.Column(db.String(256),nullable=False)
 #     定义wai建
     article_id=db.Column(db.Integer, db.ForeignKey('article.id'),nullable=True)
 

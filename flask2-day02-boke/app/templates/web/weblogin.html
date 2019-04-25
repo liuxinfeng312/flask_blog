@@ -1,38 +1,60 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>&nbsp;-&nbsp;&nbsp;-&nbsp;&nbsp;-&nbsp;登陆页面！</title>
+		<link rel="stylesheet" type="text/css" href="../../static/web/css/login.css" />
+		<script type="text/javascript" src="../../static/web/js/jquery-1.12.0.js" ></script>
+		<script type="text/javascript" src="../../static/web/js/jquery.cookie.js" ></script>
+		<script type="text/javascript" src="../../static/web/js/login.js"></script>
+	</head>
+	<body>
+		<div class="login">
 
-    <!-- Bootstrap CSS -->
-{#    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">#}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <title>Hello, world!</title>
-  </head>
-<body style="background-image: url('../../static/web/images/10.jpg');background-repeat:no-repeat; ">
 
 
-<form class="form-inline" action="/login/" method="post" ><h2 style="color: red ;position: absolute;left: 430px;">欢迎来到我的博客请登录</h2>
-    <div class="form-group" style="position: absolute;top: 200px;left: 500px;">
+			<h2 class="lg-title">欢迎来到我的博客，请登陆</h2>
 
-    <label class="sr-only" for="exampleInputEmail3">Email address</label>
-        <input  class="form-control" id="exampleInputEmail3" placeholder="请输入用户名" name="username"><span><a href="/register/">没有帐号请注册</a></span>
-     </div>
-  <div class="form-group" style="position: absolute;top: 270px;left: 500px;">
-    <label class="sr-only" for="exampleInputPassword3">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="请输入密码" name="password">
-      <br> <span style="color: red">{{ context }}</span>
-  </div>
+			<div class="lg-mark">
 
-  <button type="submit" class="btn btn-default" style="position: absolute;top: 270px;left: 720px;" >Sign in </button>
-    <br>
+			</div>
 
-</form>
-{#    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>#}
-{#    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>#}
-{#    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>#}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+			<div class="lg-major">
+				<form  action="/login/" method="post"  id="lgForm">
+					<ul>
+						<li class="name">
+							<input  name="username" id="nameIn" type="text" placeholder="请输入四位以上的用户名"/>
+							<div class="stop"><img src="../../static/web/images/stop.png"/><span>请输入四位以上 用户名！</span></div>
+						</li><span style="color: red">{{ context }}</span>
 
-  </body>
+						<li class="pwd">
+							<input name="password" id="pwdIn" type="password" placeholder="密码"/>
+						</li>
+
+						<li class="picCode">
+							<input type="text" placeholder="请输入验证码"/>
+
+							<span class="code"></span>
+
+							<span class="change">看不清<br />换一换</span>
+						</li>
+
+						<li class="ways">
+
+
+
+						</li>
+
+						<li class="loginBtn">
+							<a > <button type="submit"> 登陆</button></a>
+						</li>
+
+						<li class="registerBtn">
+							<a href="/register/">注册</a>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</body>
 </html>

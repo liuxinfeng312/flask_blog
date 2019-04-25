@@ -68,12 +68,12 @@
       </div>
   </aside>
   <main class="r_box">
-
-      {% for foo in article %}
 <div class="test">
+      {% for foo in article %}
+
           <li><i><a href="/"><img src="/static/web/images/{{ foo.id }}.jpg"></a></i>
 
-          <h3 ><a  id="title_id" data-id="{{ foo.id }}">{{ foo.title  }}</a></h3>
+          <h3 ><a href="/info/{{ foo.id }}" id="title_id"  data-titleid="{{ foo.id }}">{{ foo.title  }}</a></h3>
 
       <p>{{ foo.context }}</p>
           </li>
@@ -133,7 +133,7 @@
 {#      <p>也许，爱情没有永远，地老天荒也走不完，生命终结的末端，苦短情长。站在岁月的边端，那些美丽的定格，心伤的绝恋，都被四季的掩埋，一去不返。徒剩下这荒芜的花好月圆，一路相随，流离天涯背负了谁的思念？</p>#}
 {#    </li>#}
 {#    <li><i><a href="/"><img src="/static/web/images/9.jpg"></a></i>#}
-{#      <h3><a href="/">擦肩而过</a></h3>#}user
+{#      <h3><a href="/">擦肩而过</a></h3>#}
 {#      <p>《擦肩而过》文/清河鱼 编绘/天朝羽打开一扇窗，我不曾把你想得平常。看季节一一过往。你停留的那个地方，是否依然花儿开放？在夜里守靠着梦中的，想那仿佛前世铭刻进心肠的</p>#}
 {#    </li>#}
   </main>

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, session, redirect, url_for
+from flask import Blueprint, request, render_template, session, redirect, url_for, jsonify
 from app.models import User, Backuser, Article
 
 from app.exts import db, cache
@@ -15,6 +15,8 @@ def test():
 
 @blue.route('/index/')#主页
 def index():
+    title_id= request.args.get('title_id')
+    print(title_id)
 
     username=session.get('username')
     if username:
@@ -37,12 +39,18 @@ def gbook():
         return render_template('web/webgbook.html', username=username)
     return redirect(url_for('blue.login'))
 
-@blue.route('/info/')#内容页
-def info():
+@blue.route('/info/<int:id>')#内容页
+def info(id):
+    # actitle=Article.query.get(id)
+    # print(actitle)-
+
+
     username = session.get('username')
     if username:
-        return render_template('web/webinfo.html', username=username)
+        actitle = Article.query.get(id)
+        return render_template('web/webinfo.html', username=username,actitle=actitle)
     return redirect(url_for('blue.login'))
+
 
 @blue.route('/infopic/')#内容页
 def infopic():
@@ -71,7 +79,9 @@ def register():
     elif request.method == 'POST':
         username=request.form.get('username')
         password=request.form.get('password')
-
+        if not (username and password):
+            context = '该用户已存在'
+            return render_template('web/webregister.html', context=context)
         try:
             user=User()
             user.username=username
@@ -84,6 +94,7 @@ def register():
             context='该用户已存在'
             return render_template('web/webregister.html' ,context=context)
         session['username'] = username
+
         return redirect(url_for('blue.index'))
 
 
@@ -149,6 +160,7 @@ def backarticle():
     else:
         return redirect(url_for('blue.backlogin'))
 
+
 @blue.route('/backlogin/',methods=['POST','GET'])#后台登陆
 def backlogin():
     if request.method=='GET':
@@ -169,13 +181,59 @@ def backlogin():
             context='用户名或密码错误'
             return render_template('back/backlogin.html',context=context)
 
+@blue.route('/delete/',methods=['POST','GET'])#删除文章内容
+def delete():
+    deleteid=request.args.get('deleteid')
+    article=Article.query.get(deleteid)
+    db.session.delete(article)
+    db.session.commit()
+
+
+    # print(deleteid)
+    response_data={
+        'msg':'删除文章成功',
+        'status':'1'
+
+    }
+    return jsonify(response_data)
+
 
 
 @blue.route('/backupdate/',methods=['POST','GET'])#更新文章
 def backupdate():
+    updateid = request.args.get('updateid')
+    article = Article.query.get(updateid)
+    print(updateid)
+    #
+    print(article.title)
+    response_data={
+        'msg':'success',
+        'status':'1',
+        'article_title':article.title,
+        'article_content':article.context
 
-    return render_template('back/backupdate-article.html')
+    }
+    return jsonify(response_data)
 
+@blue.route('/backupdate01/<int:id>', methods=['POST', 'GET'])  # 更新文章
+def updata_data(id):
+
+
+
+    if request.method=='GET':
+        article=Article.query.get(id)
+
+
+        return render_template('back/backupdate-article.html',article=article)
+    elif request.method=='POST':
+        title=request.form.get('title')
+        context=request.form.get('content')
+        article=Article.query.get(id)
+        article.title=title
+        article.context=context
+        db.session.add(article)
+        db.session.commit()
+        return redirect(url_for('blue.backarticle'))
 @blue.route('/backlogout/')
 def backlogout():
     username = session.get('backusername')

@@ -1,0 +1,27 @@
+@charset "utf-8";
+.re-major ul li{margin: 15px auto;position: relative;}
+
+.phoneCode{background: none;border: none;}
+
+.phoneCode input{width: 127px;height: 42px;padding: 0 8px;border: 1px solid #cbcbcb; color: #666;
+				background: white;border-radius: 3px;}
+
+.phoneCode a{display: inline-block;background-color: #f9f9f9;border: 1px solid #cbcbcb;
+    		color: #666;width: 150px;height: 42px;border-radius: 3px;text-align: center;
+    		line-height: 42px;margin-left: 10px;font-size: 12px;}
+
+.access{background: none;border: none;height: 14px;}
+
+.access input{width: 14px;height: 14px;margin-right: 5px;vertical-align: -2px;}
+
+.access a{color: #999;line-height: 14px;font-size: 12px;}
+
+.access a span:hover{color: orangered;}
+
+.active{position: absolute;top: -1px;left: 360px;border-radius: 3px;
+    	border: 1px solid #cbcbcb;color: #666;padding: 3px 15px;line-height: 37px;
+    	background-color: #f9f9f9;width: auto;white-space: nowrap;height: 39px;font-size: 14px;}
+
+.wrong{position: absolute;top: -1px;left: 360px;border-radius: 3px;
+		border: 1px solid deeppink;color: red;padding: 3px 15px;line-height: 37px;
+    	background-color: pink;width: auto;white-space: nowrap;height: 39px;font-size: 14px;}
