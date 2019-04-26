@@ -13,46 +13,76 @@ $(function(){
 	//用户名验证
 
 
-	//更换验证码
-	var strs = "";
-	for(var i=0;i<4;i++){
-		var num=parseInt(Math.random()*100%10+48);
-		var stra=String.fromCharCode(num);
-		strs=strs.concat(stra);
-	}
-	code.html(strs);
-	
-	code.click(function(){
-		var strSum = "";
-		for(var i=0;i<4;i++){
-			var num=parseInt(Math.random()*100%10+48);
-			var str=String.fromCharCode(num);
-				strSum=strSum.concat(str);
+
+
+	code.click(function () {
+		console.log('点击成功')
+		request_data={
+			'msg':'success'
 		}
-		code.html(strSum);
-	})
-	
-	change.click(function(){
-		var strSum = "";
-		for(var i=0;i<4;i++){
-			var num=parseInt(Math.random()*100%10+48);
-			var str=String.fromCharCode(num);
-				strSum=strSum.concat(str);
-		}
-		code.html(strSum);
+		$.get('/getcode/',request_data,function (response) {
+			console.log(response)
+			if (response.status==1){
+				code.html(response.code)
+
+			}
+
+		})
+
+
 	})
 
-	picCode.find("input").blur(function(){
-		if(picCode.find("input").val() != code.html()){
-			$(this).attr("placeholder","请重新输入验证码");
-			 exist = false;
-		}
-	})
-	
-	if(picCode.find("input").val() == ""){
-		exist = false;
-	}
-	
+	// var strs = "";
+	// for(var i=0;i<4;i++){
+	// 	var num=parseInt(Math.random()*100%10+48);
+	// 	var stra=String.fromCharCode(num);
+	// 	strs=strs.concat(stra);
+	// }
+	// code.html(strs);
+	//
+	// code.click(function(){
+	// 	var strSum = "";
+	// 	for(var i=0;i<4;i++) {
+	// 		var num = parseInt(Math.random() * 100 % 10 + 48);
+	// 		var str = String.fromCharCode(num);
+	// 		strSum = strSum.concat(str);
+	// 	}
+		//
+		// console.log('点击成功')
+		// request_data={
+		// 	'code':$('.code').html()
+		//
+		// }
+		// $.get('/register/',request_data,function (response) {
+		// 	// console.log(response)
+		//
+		// })
+
+
+
+	// })
+	// 	code.html(strSum);
+	// })
+	//
+	// change.click(function(){
+	// 	var strSum = "";
+	// 	for(var i=0;i<4;i++){
+	// 		var num=parseInt(Math.random()*100%10+48);
+	// 		var str=String.fromCharCode(num);
+	// 			strSum=strSum.concat(str);
+	// 	}
+	// 	code.html(strSum);
+	// })
+	//
+	// picCode.find("input").blur(function(){
+	// 	if(picCode.find("input").val() != code.html()){
+	// 		$(this).attr("placeholder","请重新输入验证码");
+	// 		 exist = false;
+	// 	}
+	//
+	// })
+
+
 	//登录
 
 

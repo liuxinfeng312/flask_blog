@@ -1,4 +1,5 @@
 {% extends 'web/webbase.html' %}
+
 {% block js %}
     <script type="text/javascript" src="/static/web/js/webindex.js"></script>
 {% endblock %}
@@ -136,6 +137,46 @@
 {#      <h3><a href="/">擦肩而过</a></h3>#}
 {#      <p>《擦肩而过》文/清河鱼 编绘/天朝羽打开一扇窗，我不曾把你想得平常。看季节一一过往。你停留的那个地方，是否依然花儿开放？在夜里守靠着梦中的，想那仿佛前世铭刻进心肠的</p>#}
 {#    </li>#}
+{#    <div class="pagelist"><a class="allpage"><b>上一页</b></a>&nbsp;&nbsp;<a href="{{ url_for('blue.indexfenye',id=1) }}" class="curPage">1</a>&nbsp;&nbsp;<a href="{{ url_for('blue.indexfenye',id=2) }}" onclick="page(2)">2</a>&nbsp;&nbsp;<a href="{{ url_for('blue.indexfenye',id=3) }}" onclick="page(3)">3</a>&nbsp;&nbsp;<a href="{{ url_for('blue.indexfenye',id=4) }}" onclick="page(4)">4</a>&nbsp;&nbsp;<a href="#" onclick="page(5)">5</a>&nbsp;&nbsp;<a href="#" onclick="page(6)">6</a>&nbsp;&nbsp;<a href="#" onclick="page(7)">7</a>&nbsp;&nbsp;<a href="#" onclick="page(8)">8</a>&nbsp;&nbsp;<a href="#" onclick="page(9)">9</a>&nbsp;&nbsp;<a href="#" onclick="page(2)">下一页</a></div>#}
+     <div class="pagelist">
+         <a class="allpage" href="/indexfenye/{{ prev }}"><b>上一页</b></a>&nbsp;
+         {% for foo in range(1,num_article) %}
+
+      </a>&nbsp;&nbsp;<a href="/indexfenye/{{ foo }}" class="curPage">{{ foo }}</a>&nbsp;
+
+    {% endfor %}
+         &nbsp;&nbsp;<a href="/indexfenye/{{ next }}" onclick ="page(2)">下一页</a></div>
+
   </main>
+{#  <div class="pagelist"><a class="allpage"><b>上一页</b></a>&nbsp;&nbsp;<a href="{{ url_for('blue.indexfenye',id=1) }}" class="curPage">1</a>&nbsp;&nbsp;<a href="{{ url_for('blue.indexfenye',id=2) }}" onclick="page(2)">2</a>&nbsp;&nbsp;<a href="{{ url_for('blue.indexfenye',id=3) }}" onclick="page(3)">3</a>&nbsp;&nbsp;<a href="#" onclick="page(4)">4</a>&nbsp;&nbsp;<a href="#" onclick="page(5)">5</a>&nbsp;&nbsp;<a href="#" onclick="page(6)">6</a>&nbsp;&nbsp;<a href="#" onclick="page(7)">7</a>&nbsp;&nbsp;<a href="#" onclick="page(8)">8</a>&nbsp;&nbsp;<a href="#" onclick="page(9)">9</a>&nbsp;&nbsp;<a href="#" onclick="page(2)">下一页</a></div>#}
+{#{% macro pagination_widget(pagination, endpoint) %}#}
+{#    <ul class="pagination">#}
+{#        <li{% if not pagination.has_prev %} class="disabled"{% endif %}>#}
+{#            <a href="{% if pagination.has_prev %}{{ url_for(endpoint,page = pagination.page - 1, **kwargs) }}#}
+{#            {% else %}#{% endif %}">&laquo;#}
+{#            </a>#}
+{#        </li>#}
+{#        {% for p in pagination.iter_pages() %}#}
+{#            {% if p %}#}
+{#                {% if p == pagination.page %}#}
+{#                    <li class="active">#}
+{#                        <a href="{{ url_for(endpoint, page = p, **kwargs) }}">{{ p }}</a>#}
+{#                    </li>#}
+{#                {% else %}#}
+{#                <li>#}
+{#                    <a href="{{ url_for(endpoint, page = p, **kwargs) }}">{{ p }}</a>#}
+{#                </li>#}
+{#                {% endif %}#}
+{#            {% else %}#}
+{#            <li class="disabled">#}
+{#                <a href="#">&hellip;</a>#}
+{#            </li>#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+{#        <li{% if not pagination.has_next %} class="disabled"{% endif %}>#}
+{#            <a href="{% if pagination.has_next %}{{ url_for(endpoint,page = pagination.page + 1, **kwargs) }}{% else %}#{% endif %}">&raquo;</a>#}
+{#        </li>#}
+{#    </ul>#}
+{#{% endmacro %}#}
 </article>
 {% endblock %}

@@ -1,3 +1,6 @@
+import math
+import random
+
 from flask import Blueprint, request, render_template, session, redirect, url_for, jsonify
 from app.models import User, Backuser, Article
 
@@ -14,17 +17,56 @@ def test():
     return redirect(url_for('blue.index'))
 
 @blue.route('/index/')#主页
-def index():
-    title_id= request.args.get('title_id')
-    print(title_id)
+def index(id=1):
+    # title_id= request.args.get('title_id')
+    # print(title_id)
 
     username=session.get('username')
     if username:
 
-        article=Article.query.all()
+        # article=Article.query.all()
+        article = Article.query.limit(8)
+        num_article = math.ceil(len(Article.query.all()) / 8) + 1
+        if id-1>0:
+            prev=id-1
+        else:
+            prev=1
+        if id <num_article-1:
+            next = id + 1
+        else:
+            next = num_article-1
 
-        return render_template('web/webindex.html', username=username,article=article)
+
+
+        return render_template('web/webindex.html', username=username,article=article,num_article=num_article,next=next,prev=prev)
     return redirect(url_for('blue.login'))
+
+@blue.route('/indexfenye/<int:id>')#主页
+def indexfenye(id=1):
+    # title_id= request.args.get('title_id')
+    # print(title_id)
+
+    username=session.get('username')
+    if username:
+        global prev
+        global next
+        article=Article.query.offset((id-1)*8).limit(8)
+        num_article=math.ceil(len(Article.query.all())/8)+1
+
+        print(num_article)
+        if id-1>0:
+            prev=id-1
+        else:
+            prev=1
+        if id <num_article-1:
+            next = id + 1
+        else:
+            next = num_article-1
+
+
+        return render_template('web/webindex.html', username=username,article=article,num_article=num_article,next=next,prev=prev)
+    return redirect(url_for('blue.login'))
+
 
 @blue.route('/about/')#关于我
 def about():
@@ -72,16 +114,34 @@ def share():
     if username:
         return render_template('web/webshare.html', username=username)
     return redirect(url_for('blue.login'))
+
+
 @blue.route('/register/',methods=['POST','GET'])#注册
 def register():
+
+
     if request.method == 'GET':
+        # temp = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
+        # random_str = ''
+        #
+        # for i in range(0, 4):
+        #     random_str += temp[random.randrange(0, len(temp))]
         return render_template('web/webregister.html')
     elif request.method == 'POST':
         username=request.form.get('username')
         password=request.form.get('password')
+        code=request.form.get('code')
+
+
         if not (username and password):
             context = '该用户已存在'
+
             return render_template('web/webregister.html', context=context)
+        code1=session.get('code')
+        if code!=code1:
+            return render_template('web/webregister.html', error='验证码错误')
+
+        # 存入数据库
         try:
             user=User()
             user.username=username
@@ -97,6 +157,26 @@ def register():
 
         return redirect(url_for('blue.index'))
 
+@blue.route('/getcode/',methods=['POST','GET'])
+def getcode():
+    msg=request.args.get('msg')
+
+    print(msg)
+
+    temp = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
+    random_str = ''
+
+    for i in range(0, 4):
+        random_str += temp[random.randrange(0, len(temp))]
+
+
+    response_data={
+        'status':1,
+        'code':random_str
+    }
+    session['code']=random_str
+    return jsonify(response_data)
+
 
 @blue.route('/login/',methods=['POST','GET'])#登陆
 
@@ -106,8 +186,12 @@ def login():
     elif request.method=='POST':
         username=request.form.get('username')
         password=request.form.get('password')
+        code=request.form.get('code')
         users = User.query.filter(User.username == username).filter(User.password == password)
         if users.count():
+            code1 = session.get('code')
+            if code != code1:
+                return render_template('web/webregister.html', error='验证码错误')
             user=users.first()
             session['username']=user.username
             return redirect(url_for('blue.index'))
